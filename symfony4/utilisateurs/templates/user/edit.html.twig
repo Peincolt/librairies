@@ -1,0 +1,48 @@
+{% form_theme formUser 'Form/form_errors.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block title %}Websitename - {% if user.id is not empty %}Modifier un utilisateur{% else %}Créer un utilisateur{% endif %}{% endblock %}
+{% block body %}
+    <div class = "content">
+        <div class="header">
+            <h1 class="title">{% if user.id is not empty %}Modifier un compte{% else %}Créer un compte{% endif %}</h1>
+        {{ form_start(formUser) }}
+        {#{% if is_granted('ROLE_ADMIN') %}#}
+        <div class="form-group">
+            {{ form_label(formUser.username,null,{'label_attr' : {'class' : 'form-label'}}) }}
+            {{ form_errors(formUser.username) }}
+            <div id="error_username"></div>
+            {{ form_widget(formUser.username, {'attr' : {'class' : 'form-control input-form'}}) }}
+        </div>
+        {#{% endif %}#}
+        <div class="form-group">
+            {{ form_label(formUser.email,null,{'label_attr' : {'class' : 'form-label'}}) }}
+            {{ form_errors(formUser.email) }}
+            <div id="error_email"></div>
+            {{ form_widget(formUser.email, {'attr' : {'class' : 'form-control input-form'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(formUser.password.first,null,{'label_attr' : {'class' : 'form-label'}}) }}
+            {{ form_errors(formUser.password.first) }}
+            <div id="error_password"></div>
+            {{ form_widget(formUser.password.first, {'attr' : {'class' : 'form-control input-form'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(formUser.password.second,null,{'label_attr' : {'class' : 'form-label'}}) }}
+            {{ form_errors(formUser.password.second) }}
+            {{ form_widget(formUser.password.second, {'attr' : {'class' : 'form-control input-form'}}) }}
+        </div>
+        {% if formUser.roles is defined %}
+        <div class="form-group">
+            {{ form_label(formUser.roles,'',{'label_attr' : {'class' : 'form-label'}}) }}
+            {{ form_errors(formUser.roles) }}<br/>
+            {% for child in formUser.roles %}
+            {{ form_widget(child) }}{{ form_label(child) }}<br/>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <input type="submit" id="submit" name="submit" value="Valider" class="btn btn-primary btn-submit">
+        </div>
+        {{ form_end(formUser) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block title %}User - list{% endblock %}
+{% block body %}
+<h1 class="title"> Liste des utilisateurs </h1>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            {% for key, value in fields %}
+            <th {% if users.isSorted(key) %} class="sorted"{% endif %}>{{ knp_pagination_sortable(users,value,key) }}</th>
+            {% endfor %}
+            <th>Suppression</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        {% set finalRole = "" %}
+        {% for role in user.roles %}
+        {% if finalRole|length > 0 %}
+        {% set finalRole = finalRole ~ "," ~ role|split('_')[1]|capitalize %}
+        {% else %}
+        {% set finalRole = role|split('_')[1]|capitalize %}
+        {% endif %}
+        {% endfor %}
+        <tr>
+            <td>
+                <a href="{{ path('admin_user_edit',{'id':user.id}) }}">{{ user.username }}</a>
+            </td>
+            <td>
+                <a href="{{ path('admin_user_edit',{'id':user.id}) }}">{{ user.email }}</a>
+            </td>
+            <td>
+                <a href="{{ path('admin_user_edit',{'id':user.id}) }}">{{ finalRole }}</a>
+            </td>
+            <td>
+                <a href="#" id="{{ user.id }}" name="{{ user.username }}" onclick="confirmDelete(this)">Supprimer</a>
+            <td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{{ knp_pagination_render(users) }}
+<script type="text/javascript">
+    function confirmDelete(target)
+    {
+        if (confirm('Êtes-vous certain de vouloir supprimer l\'utilisateur '+target.name+' ?')) {
+            window.location.href ="/user/delete/"+target.id;
+        }
+    }
+</script>
+{% endblock %}
