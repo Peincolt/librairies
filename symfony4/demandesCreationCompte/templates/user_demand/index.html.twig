@@ -1,0 +1,53 @@
+{% form_theme formDemand 'Form/form_errors.html.twig' %}
+{% extends 'base.html.twig' %}
+{% block title %}Demand access{% endblock %}
+{% block body %}
+{{ parent() }}
+    <div class="container">
+        <div class = "content">
+            <div class="header">
+                <img src="{{ asset('build/images/Logo-jedi-order.png') }}" class="image-header">
+                <h1 class="title"> Demandez votre compte ! </h1>
+                <p class="text-intro"> En remplissant ce formulaire, vous faites une demande de création de compte.
+                Si la demande est acceptée, vous recevrez une notification par email. </p>
+            </div>
+            {{ form_start(formDemand) }}
+            <div class="form-group">
+                {{ form_label(formDemand.username,null,{'label_attr' : {'class' : 'form-label'}}) }}
+                {{ form_errors(formDemand.username) }}
+                <div id="error_username"></div>
+                {{ form_widget(formDemand.username, {'attr' : {'class' : 'form-control input-form'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formDemand.email,null,{'label_attr' : {'class' : 'form-label'}}) }}
+                {{ form_errors(formDemand.email) }}
+                <div id="error_email"></div>
+                {{ form_widget(formDemand.email, {'attr' : {'class' : 'form-control input-form'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formDemand.password.first,null,{'label_attr' : {'class' : 'form-label'}}) }}
+                {{ form_errors(formDemand.password) }}
+                <div id="error_password"></div>
+                {{ form_widget(formDemand.password.first, {'attr' : {'class' : 'form-control input-form'}}) }}
+                <span id="error_password"></span>
+            </div>
+            <div class="form-group">
+                {{ form_label(formDemand.password.second,null,{'label_attr' : {'class' : 'form-label'}}) }}
+                {{ form_errors(formDemand.password.second) }}
+                {{ form_widget(formDemand.password.second, {'attr' : {'class' : 'form-control input-form'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formDemand.role,'',{'label_attr' : {'class' : 'form-label'}}) }}
+                {{ form_errors(formDemand.role) }}
+                {{ form_widget(formDemand.role, {'attr' : {'class' : 'form-control form-select'}}) }}
+            </div>
+            <div class="form-group">
+                <input type="submit" name="submit" id="submit" value="Valider" class="btn btn-submit">
+            </div>
+            {{ form_end(formDemand) }}
+        </div>
+    </div>  
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
